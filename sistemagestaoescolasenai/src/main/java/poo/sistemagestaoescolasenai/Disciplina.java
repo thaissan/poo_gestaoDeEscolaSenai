@@ -1,6 +1,7 @@
 package poo.sistemagestaoescolasenai;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +14,9 @@ import lombok.Setter;
 public class Disciplina {
 
     private static List<Disciplina> listaDisciplinas = new ArrayList<>();
-    private Map<Aluno, Double> notas; //mapeia aluno para as notas
-    private Map<Integer, Map<Aluno, Double>> notasPorBimestre; //mapeia bimestres que vao se associar com os alunos e notas em cada bimestre
+    private Map<Aluno, Double> notas; // mapeia aluno para as notas
+    private Map<Integer, Map<Aluno, Double>> notasPorBimestre; // mapeia bimestres que vao se associar com os alunos e
+                                                               // notas em cada bimestre
 
     private int idCodigo;
     private String nomeDisciplina;
@@ -41,17 +43,21 @@ public class Disciplina {
         this.alunos.add(aluno);
     }
 
-     // Método para lançar a nota
-     public void lancarNota(Aluno aluno, double nota, int bimestre) {
-        if (!notasPorBimestre.containsKey(bimestre)) { //ve se ja existe map de notas por bimestre
-            notasPorBimestre.put(bimestre, new HashMap<>());  // Se não existir, cria um novo mapa para o bimestr
-        }
-        Map<Aluno, Double> notas = notasPorBimestre.get(bimestre);// armazena nota do aluno para o bimestre
-        notas.put(aluno, nota); //add nota do aluno
+    public void lancarNota(Aluno aluno, double nota, int bimestre, Date data) {
+        Notas novaNota = new Notas(this, nota, data, bimestre, aluno);
     }
 
-     // Método para obter a nota de um aluno em um determinado bimestre
-     public Double getNotaPorBimestre(int bimestre, Aluno aluno) {
+    // Método para lançar a nota
+    public void lancarNotaProfessor(Aluno aluno, double nota, int bimestre) {
+        if (!notasPorBimestre.containsKey(bimestre)) { // ve se ja existe map de notas por bimestre
+            notasPorBimestre.put(bimestre, new HashMap<>()); // Se não existir, cria um novo mapa para o bimestr
+        }
+        Map<Aluno, Double> notas = notasPorBimestre.get(bimestre);// armazena nota do aluno para o bimestre
+        notas.put(aluno, nota); // add nota do aluno
+    }
+
+    // Método para obter a nota de um aluno em um determinado bimestre
+    public Double getNotaPorBimestre(int bimestre, Aluno aluno) {
         // Verifica se o bimestre tem notas e se o aluno tem uma nota no bimestre
         if (notasPorBimestre.containsKey(bimestre)) {
             Map<Aluno, Double> notasBimestre = notasPorBimestre.get(bimestre);
@@ -59,12 +65,12 @@ public class Disciplina {
         }
         return null;
     }
-    
-    //Exibir informações da disciplina
+
+    // Exibir informações da disciplina
     @Override
     public String toString() {
         return "Disciplina [idCodigo=" + idCodigo + ", nomeDisciplina=" + nomeDisciplina +
-               ", cargaHoraria=" + cargaHoraria + ", turno=" + turno +", professor=" + professor.getNome() + "]";
+                ", cargaHoraria=" + cargaHoraria + ", turno=" + turno + ", professor=" + professor.getNome() + "]";
     }
 
     public List<Aluno> getAlunosMatriculados() {
@@ -81,15 +87,4 @@ public class Disciplina {
             }
         }
     }
-
-    public List<Double> getNotasAluno(Aluno aluno) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNotasAluno'");
-    }
-
-    public double calcularMediaFinal(Aluno aluno) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularMediaFinal'");
-    }
-    
 }

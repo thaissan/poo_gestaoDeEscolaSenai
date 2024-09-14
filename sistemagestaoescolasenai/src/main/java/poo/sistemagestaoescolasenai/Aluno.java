@@ -14,13 +14,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Aluno extends Pessoa {
-    //Guarda ano e semestre para gerar a matricula > 2024-1
-    private static Map<String, Integer> matriculasAlunoPorAnoSemestre = new HashMap<>(); 
+    // Guarda ano e semestre para gerar a matricula > 2024-1
+    private static Map<String, Integer> matriculasAlunoPorAnoSemestre = new HashMap<>();
     private static List<Aluno> alunosCadastrados = new ArrayList<>();
-    private static List<Aluno> listaAlunos = new ArrayList<>();
 
     private String matricula;
-    private Pessoa responsavel; // Pode ser uma instância da classe Responsavel se preferir
+    private Pessoa responsavel;
     private String observacoes;
     private List<Disciplina> disciplinasCursando;
     private List<Notas> notas;
@@ -50,10 +49,6 @@ public class Aluno extends Pessoa {
         this.disciplinasCursando.add(disciplina);
     }
 
-    public void addNota(Notas nota) {
-        this.notas.add(nota);
-    }
-
     public void registrarFalta() {
         this.faltas++;
     }
@@ -70,13 +65,13 @@ public class Aluno extends Pessoa {
         alunosCadastrados.add(aluno);
     }
 
-    //listar disciplinas que o aluno está cursando
+    // listar disciplinas que o aluno está cursando
     public void listarDisciplinas() {
         if (disciplinasCursando.isEmpty()) {
             System.out.println("O aluno " + getNome() + " não está associado a nenhuma disciplina.");
         } else {
             System.out.println("Disciplinas do aluno " + getNome() + ":");
-            for (Disciplina disciplina : disciplinasCursando) { //para cada disciplina em disciplinasCursando 
+            for (Disciplina disciplina : disciplinasCursando) { // para cada disciplina em disciplinasCursando
                 System.out.println(disciplina);
             }
         }
@@ -117,12 +112,17 @@ public class Aluno extends Pessoa {
         return sb.toString(); // Retorna a string construída
     }
 
+    public static List<Aluno> getAlunosCadastrados() {
+        return alunosCadastrados;
+    }
+
     // Gerar Matrícula
     public static String gerarMatriculaAluno(int semestre) {
         Calendar now = Calendar.getInstance(); // pega a data atual
-        int ano = now.get(Calendar.YEAR); //pega só o ano da data
+        int ano = now.get(Calendar.YEAR); // pega só o ano da data
         String chaveAnoSemestre = ano + "-" + semestre;
-        int numeroSerial = matriculasAlunoPorAnoSemestre.getOrDefault(chaveAnoSemestre, 0) + 1; //se chaveAnoS não existir ele retorna 0
+        int numeroSerial = matriculasAlunoPorAnoSemestre.getOrDefault(chaveAnoSemestre, 0) + 1; // se chaveAnoS não
+                                                                                                // existir ele retorna 0
         matriculasAlunoPorAnoSemestre.put(chaveAnoSemestre, numeroSerial);
         // Formata a matrícula do aluno
         return String.format("%04d-%d-%03d", ano, semestre, numeroSerial);
@@ -207,7 +207,6 @@ public class Aluno extends Pessoa {
 
     }
 
-    //meuAmdin >> atualizar cadastro do aluno
     public static void atualizarCadastroAluno() {
         Scanner scanner = new Scanner(System.in);
 
@@ -239,7 +238,7 @@ public class Aluno extends Pessoa {
             System.out.println("8. Observações\n9. Faltas\n10. Presenças\n11. Atestado\n12. Semestre\n0. Sair");
             System.out.print("Digite sua opção: ");
             int opcao = scanner.nextInt();
-            //scanner.nextLine();
+            // scanner.nextLine();
 
             if (opcao == 0)
                 break;
@@ -355,8 +354,6 @@ public class Aluno extends Pessoa {
         }
     }
 
-    //meuAluno >> aparece só os dados de quem está logado
-
     // Listar Alunos
     public static void listarAlunos() {
         System.out.println(
@@ -435,9 +432,4 @@ public class Aluno extends Pessoa {
         }
 
     }
-
-    public static List<Aluno> getListaAlunos() {
-        return listaAlunos;
-    }
-
 }

@@ -9,12 +9,12 @@ public class MenuProfessor {
 
     public MenuProfessor(Professor professor) {
         this.professor = professor;
-    } //instancia de Professor
+    } // instancia de Professor
 
     public void exibirMenu() {
         String opcao;
 
-            do {
+        do {
             System.out.println("\n=============================================");
             System.out.println("|             * MENU PROFESSOR *            |");
             System.out.println("---------------------------------------------");
@@ -54,66 +54,73 @@ public class MenuProfessor {
         } while (!"0".equals(opcao));
     }
 
-
     // Visualiza as informações do professor logado
-    private  void visualizarInformacoes() {
+    private void visualizarInformacoes() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Confirme sua matrícula para ter acesso às informaçoes do seu cadastro: ");
-         String matricula = scanner.nextLine();
+        String matricula = scanner.nextLine();
         Professor professorEncontrado = null;
-            for (Professor professor : professor.professoresCadastrados) {
-                if (professor.getMatricula().equals(matricula)) {
-                    professorEncontrado = professor;
-                    break;
-                }
+        for (Professor professor : professor.professoresCadastrados) {
+            if (professor.getMatricula().equals(matricula)) {
+                professorEncontrado = professor;
+                break;
             }
+        }
 
-            if (professorEncontrado != null) {
-                System.out.println(professorEncontrado); // Chama o método para exibir informações detalhadas
-            } else {
-                System.out.println("/n>> Professor não encontrado.");
-            }
+        if (professorEncontrado != null) {
+            System.out.println(professorEncontrado); // Chama o método para exibir informações detalhadas
+        } else {
+            System.out.println("/n>> Professor não encontrado.");
+        }
     }
-
 
     // Lista todos os alunos e suas notas
     private void listarAlunos() {
         System.out.println("Listagem de alunos e suas notas:");
-    
+
         // Exibir disciplinas lecionadas pelo professor
         System.out.println("Escolha a disciplina para listar os alunos:");
         for (int i = 0; i < professor.getDisciplinasLecionadas().size(); i++) {
             System.out.println((i + 1) + ". " + professor.getDisciplinasLecionadas().get(i).getNomeDisciplina());
         }
-    
-        //Scanner scanner = new Scanner(System.in);
+
         int escolhaDisciplina = scanner.nextInt() - 1;
-        scanner.nextLine();  // Consumir a nova linha
-    
+        scanner.nextLine(); // Consumir a nova linha
+
         if (escolhaDisciplina < 0 || escolhaDisciplina >= professor.getDisciplinasLecionadas().size()) {
             System.out.println("Opção inválida.");
             return;
         }
-    
+
         Disciplina disciplinaEscolhida = professor.getDisciplinasLecionadas().get(escolhaDisciplina);
-    
-        // Solicitar o bimestre para listar as notas
-        System.out.println("Digite o bimestre para listar as notas (1, 2, 3, 4):");
-        int bimestre = scanner.nextInt(); // Ler o bimestre como int
-    
-        // Exibir alunos e suas notas
+
+        // Exibir alunos e suas notas dos 4 bimestres
         List<Aluno> alunosDaDisciplina = disciplinaEscolhida.getAlunosMatriculados();
         if (alunosDaDisciplina == null || alunosDaDisciplina.isEmpty()) {
             System.out.println("Nenhum aluno matriculado nesta disciplina.");
             return;
         }
-    
-        System.out.println("=================================================================");
-        System.out.println("Matrícula\tNome\t\t\tNota");
-        System.out.println("=================================================================");
+
+        System.out
+                .println("===========================================================================================");
+        System.out.println("Matrícula\tNome\t\t\t1º Bim\t2º Bim\t3º Bim\t4º Bim");
+        System.out
+                .println("===========================================================================================");
         for (Aluno aluno : alunosDaDisciplina) {
-            Double nota = disciplinaEscolhida.getNotaPorBimestre(bimestre, aluno); // Passar o bimestre como int
-            System.out.println(aluno.getMatricula() + "\t" + aluno.getNome() + "\t" + (nota != null ? nota : "Nenhuma nota"));
+            // Obter as notas de cada bimestre para o aluno
+            Double nota1 = disciplinaEscolhida.getNotaPorBimestre(1, aluno);
+            Double nota2 = disciplinaEscolhida.getNotaPorBimestre(2, aluno);
+            Double nota3 = disciplinaEscolhida.getNotaPorBimestre(3, aluno);
+            Double nota4 = disciplinaEscolhida.getNotaPorBimestre(4, aluno);
+
+            // Exibir as notas na tabela formatada
+            System.out.printf("%-10s\t%-20s\t%-6s\t%-6s\t%-6s\t%-6s\n",
+                    aluno.getMatricula(),
+                    aluno.getNome(),
+                    (nota1 != null ? nota1 : "N/A"),
+                    (nota2 != null ? nota2 : "N/A"),
+                    (nota3 != null ? nota3 : "N/A"),
+                    (nota4 != null ? nota4 : "N/A"));
         }
     }
 

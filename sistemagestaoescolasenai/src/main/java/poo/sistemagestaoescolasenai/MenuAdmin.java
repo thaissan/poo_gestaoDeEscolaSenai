@@ -58,7 +58,7 @@ public class MenuAdmin {
                     Professor.listarProfessores();
                     break;
                 case "9":
-                    Notas.gerarBoletim();                    
+                    Notas.gerarBoletim();
                     break;
                 case "0":
                     System.out.println("Encerrando a aplicação...");

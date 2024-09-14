@@ -17,18 +17,19 @@ public class Professor extends Funcionario {
     private static int contadorMatricula = 0; // Contador para gerar matrículas
     private static final Scanner scanner = new Scanner(System.in);
     static List<Professor> professoresCadastrados = new ArrayList<>();
-    
+
     private String matricula;
-    private List<Disciplina> disciplinasLecionadas = new ArrayList<>();  // Lista de disciplinas do professor
-    
+    private List<Disciplina> disciplinasLecionadas = new ArrayList<>(); // Lista de disciplinas do professor
+
     // Variável estática para matrícula do professor logado
     private static String matriculaLogado;
 
-    public Professor(String nome, String cpf, String dataNascimento, Endereco endereco, String telefone, String email, String atestado, int faltasRegistradas, int presencasRegistradas) {
+    public Professor(String nome, String cpf, String dataNascimento, Endereco endereco, String telefone, String email,
+            String atestado, int faltasRegistradas, int presencasRegistradas) {
         super(nome, cpf, dataNascimento, endereco, telefone, email, atestado, faltasRegistradas, presencasRegistradas);
-        this.matricula = gerarMatriculaProfessor(); 
+        this.matricula = gerarMatriculaProfessor();
         professores.put(this.matricula, this);
-        //this.disciplinasLecionadas = new ArrayList<>();
+        // this.disciplinasLecionadas = new ArrayList<>();
     }
 
     // Gera matrícula do professor
@@ -60,11 +61,12 @@ public class Professor extends Funcionario {
     public void addDisciplina(Disciplina disciplina) {
         this.disciplinasLecionadas.add(disciplina);
     }
+
     public void removeDisciplina(Disciplina disciplina) {
         disciplinasLecionadas.remove(disciplina);
     }
 
-    //listar disciplinas lecionadas
+    // listar disciplinas lecionadas
     public void listarDisciplinas() {
         if (disciplinasLecionadas.isEmpty()) {
             System.out.println("O professor " + getNome() + " não está associado a nenhuma disciplina.");
@@ -75,10 +77,10 @@ public class Professor extends Funcionario {
             }
         }
     }
-    
-    //Cadastrar professor
-    public static void cadastrarProfesor(){
-       Scanner scanner = new Scanner(System.in);
+
+    // Cadastrar professor
+    public static void cadastrarProfesor() {
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("\n=============================================");
         System.out.println("|          * CADASTRO DE PROFESSOR *        |");
@@ -124,9 +126,8 @@ public class Professor extends Funcionario {
         Endereco endereco = new Endereco(logradouro, numero, bairro, cidade, estado, cep);
 
         Professor professor = new Professor(nome, cpf, dataNascimento, endereco, telefone, email,
-                 "", 0, 0);
+                "", 0, 0);
 
-        
         adicionarProfessor(professor);
 
         System.out.println("\n---------------------------------------------");
@@ -135,7 +136,7 @@ public class Professor extends Funcionario {
     }
 
     // Atualiza o cadastro do professor
-    public static void atualizarCadastroProfessor(){
+    public static void atualizarCadastroProfessor() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\n===========================================");
@@ -172,7 +173,7 @@ public class Professor extends Funcionario {
             if (opcao == 0)
                 break;
 
-            //String novoValor = scanner.nextLine();
+            // String novoValor = scanner.nextLine();
 
             switch (opcao) {
                 case 1 -> {
@@ -221,7 +222,7 @@ public class Professor extends Funcionario {
                     System.out.print("Digite o novo atestado: ");
                     String atestado = scanner.nextLine();
                     professorParaAtualizar.setAtestado(atestado);
-                    
+
                 }
                 case 8 -> {
                     System.out.print("Digite o novo número de faltas: ");
@@ -243,9 +244,9 @@ public class Professor extends Funcionario {
         }
     }
 
-    //Remover Professor
-    public static void removerProfessor(){
-   Scanner scanner = new Scanner(System.in);
+    // Remover Professor
+    public static void removerProfessor() {
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Digite a matrícula do professor que deseja remover do sistema: ");
         String matricula = scanner.nextLine();
@@ -296,7 +297,7 @@ public class Professor extends Funcionario {
         }
 
         // Exibir mais infos
-        //Scanner scanner = new Scanner(System.in);
+        // Scanner scanner = new Scanner(System.in);
         System.out.println("\nDeseja exibir informações detalhadas de algum professor? (s/n)");
         String resposta = scanner.nextLine().trim().toLowerCase();
 
@@ -325,30 +326,30 @@ public class Professor extends Funcionario {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        
+
         sb.append("\n=============================================\n");
         sb.append("|        * INFORMAÇÕES DO PROFESSOR *        |\n");
         sb.append("---------------------------------------------\n");
-        sb.append(super.toString()).append("\n");  // Chama o toString da classe Pessoa e adiciona a string
+        sb.append(super.toString()).append("\n"); // Chama o toString da classe Pessoa e adiciona a string
         sb.append("Matrícula: ").append(matricula).append("\n");
         sb.append("Disciplinas que leciona:\n");
-        
+
         for (Disciplina disciplina : disciplinasLecionadas) {
             sb.append("  - ").append(disciplina.getNomeDisciplina()).append("\n");
         }
-        
-        return sb.toString();  // Retorna a string construída
+
+        return sb.toString(); // Retorna a string construída
     }
 
-    //LANÇAMENTO DE NOTAS********
+    // LANÇAMENTO DE NOTAS********
     public void lancarNotas() {
         Scanner scanner = new Scanner(System.in);
-    
+
         if (disciplinasLecionadas.isEmpty()) {
             System.out.println("Nenhuma disciplina disponível para lançar notas.");
             return;
         }
-    
+
         // Exibir disciplinas lecionadas
         System.out.println("Escolha a disciplina para lançar notas:");
         for (int i = 0; i < disciplinasLecionadas.size(); i++) {
@@ -356,22 +357,22 @@ public class Professor extends Funcionario {
         }
         System.out.print("Digite o número da disciplina: ");
         int escolhaDisciplina = scanner.nextInt() - 1;
-        scanner.nextLine();  // Consumir a nova linha
-    
+        scanner.nextLine(); // Consumir a nova linha
+
         if (escolhaDisciplina < 0 || escolhaDisciplina >= disciplinasLecionadas.size()) {
             System.out.println("Opção inválida.");
             return;
         }
-    
+
         Disciplina disciplinaEscolhida = disciplinasLecionadas.get(escolhaDisciplina);
-    
+
         // Exibir alunos da disciplina
         List<Aluno> alunosDaDisciplina = disciplinaEscolhida.getAlunosMatriculados();
         if (alunosDaDisciplina == null || alunosDaDisciplina.isEmpty()) {
             System.out.println("Nenhum aluno matriculado nesta disciplina.");
             return;
         }
-    
+
         // Escolher o bimestre
         System.out.println("Escolha o bimestre (1 a 4):");
         int bimestre = scanner.nextInt();
@@ -379,7 +380,7 @@ public class Professor extends Funcionario {
             System.out.println("Bimestre inválido.");
             return;
         }
-    
+
         // Exibir alunos da disciplina
         System.out.println("Escolha o aluno para lançar a nota:");
         for (int i = 0; i < alunosDaDisciplina.size(); i++) {
@@ -387,28 +388,23 @@ public class Professor extends Funcionario {
         }
         System.out.print("Digite o número do aluno: ");
         int escolhaAluno = scanner.nextInt() - 1;
-        scanner.nextLine();  // Consumir a nova linha
-    
+        scanner.nextLine(); // Consumir a nova linha
+
         if (escolhaAluno < 0 || escolhaAluno >= alunosDaDisciplina.size()) {
             System.out.println("Opção inválida.");
             return;
         }
-    
+
         Aluno alunoEscolhido = alunosDaDisciplina.get(escolhaAluno);
-    
+
         // Inserir a nota
         System.out.print("Digite a nota para o aluno " + alunoEscolhido.getNome() + ": ");
         double nota = scanner.nextDouble();
-    
-        // Atualizar a nota do aluno na disciplina para o bimestre escolhido
-        disciplinaEscolhida.lancarNota(alunoEscolhido, nota, bimestre);
-    
-        System.out.println("Nota lançada com sucesso.");
-    }   
 
-    public void add(Professor professor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+        // Atualizar a nota do aluno na disciplina para o bimestre escolhido
+        disciplinaEscolhida.lancarNotaProfessor(alunoEscolhido, nota, bimestre);
+
+        System.out.println("Nota lançada com sucesso.");
     }
-    
+
 }

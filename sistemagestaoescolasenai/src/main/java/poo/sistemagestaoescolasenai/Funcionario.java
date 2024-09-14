@@ -10,15 +10,16 @@ public class Funcionario extends Pessoa {
     private int faltasRegistradas;
     private int presencasRegistradas;
 
-    //método construtor
-    public Funcionario(String nome, String cpf, String dataNascimento, Endereco endereco, String telefone, String email, String atestado, int faltasRegistradas, int presencasRegistradas) {
+    // método construtor
+    public Funcionario(String nome, String cpf, String dataNascimento, Endereco endereco, String telefone, String email,
+            String atestado, int faltasRegistradas, int presencasRegistradas) {
         super(nome, cpf, dataNascimento, endereco, telefone, email);
         this.atestado = atestado;
         this.faltasRegistradas = faltasRegistradas;
         this.presencasRegistradas = presencasRegistradas;
     }
 
-    //outros métodos
+    // outros métodos
     public void registrarFalta() {
         faltasRegistradas++;
         System.out.println("Falta registrada. Total de faltas: " + faltasRegistradas);
@@ -41,5 +42,5 @@ public class Funcionario extends Pessoa {
                 ", Faltas Registradas: " + faltasRegistradas +
                 ", Presenças Registradas: " + presencasRegistradas;
     }
-    
+
 }

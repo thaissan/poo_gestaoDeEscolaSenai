@@ -26,10 +26,10 @@ public class Pessoa {
     @Override
     public String toString() {
         return "Nome: " + nome +
-        ",\nCPF: " + cpf +
-        ",\nData de Nascimento: " + dataNascimento +
-        ",\nEndereço: " + endereco +
-        ",\nTelefone: " + telefone +
-        ",\nEmail: " + email;
+                ",\nCPF: " + cpf +
+                ",\nData de Nascimento: " + dataNascimento +
+                ",\nEndereço: " + endereco +
+                ",\nTelefone: " + telefone +
+                ",\nEmail: " + email;
     }
 }

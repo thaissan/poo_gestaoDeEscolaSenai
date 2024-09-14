@@ -2,7 +2,6 @@ package poo.sistemagestaoescolasenai;
 
 import java.util.Scanner;
 
-
 public class MenuAluno {
 
     public static void exibirMenu() {
@@ -36,7 +35,7 @@ public class MenuAluno {
                     break;
                 case "0":
                     System.out.println("Encerrando a aplicação...");
-                    scanner.close(); 
+                    scanner.close();
                     System.exit(0);
                     break;
                 default:
@@ -48,24 +47,23 @@ public class MenuAluno {
 
     private static void visualizarInformacoes() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Digite a matrícula do aluno: ");
-        String matricula = scanner.nextLine();
-        
-        Aluno aluno = encontrarAlunoPorMatricula(matricula);
-        if (aluno != null) {
-            System.out.println(aluno);
-            System.out.println("Responsável: " + aluno.getResponsavel());
-        } else {
+        System.out.print("Confirme sua matrícula para ter acesso as suas informações: ");
+        String matriculaDigitada = scanner.nextLine();
+
+        // Procura o aluno pela matrícula
+        boolean alunoEncontrado = false; // verificar se encontrou o aluno
+
+        for (Aluno aluno : Aluno.getAlunosCadastrados()) {
+            if (aluno.getMatricula().equals(matriculaDigitada)) {
+                System.out.println(aluno.toString());
+                alunoEncontrado = true;
+                break; // Para o loop assim que encontrar o aluno
+            }
+        }
+
+        if (!alunoEncontrado) {
             System.out.println("Aluno não encontrado.");
         }
     }
 
-    private static Aluno encontrarAlunoPorMatricula(String matricula) {
-        for (Aluno aluno : Aluno.getListaAlunos()) {
-            if (aluno.getMatricula().equals(matricula)) {
-                return aluno;
-            }
-        }
-        return null; // retorna null se o aluno n for encontrado
-    }
 }

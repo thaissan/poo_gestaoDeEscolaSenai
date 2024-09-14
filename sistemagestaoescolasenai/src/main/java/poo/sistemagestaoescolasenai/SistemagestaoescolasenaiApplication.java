@@ -20,7 +20,7 @@ public class SistemagestaoescolasenaiApplication {
         TestePopulacao.populaAlunos();
         TestePopulacao.populaUsuarios(usuarios);// Popula os usuários e senhas
 
-        final int maxTentativas = 3;//define a quantidade de tentativas
+        final int maxTentativas = 3;// define a quantidade de tentativas
 
         Scanner scanner = new Scanner(System.in);
 
@@ -85,22 +85,21 @@ public class SistemagestaoescolasenaiApplication {
                 MenuAluno.exibirMenu();
                 break;
             case "professor":
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Digite a matrícula do professor: ");
-            String matriculaProfessor = scanner.nextLine();
-            Professor professor = Professor.encontrarProfessorPorMatricula(matriculaProfessor);
-            if (professor != null) {
-                MenuProfessor menuProfessor = new MenuProfessor(professor);
-                menuProfessor.exibirMenu();
-            } else {
-                System.out.println("Professor não encontrado.");
-            }
-            break;
-          default:
-            System.out.println("Perfil desconhecido.");
-            break;
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Digite a matrícula do professor: ");
+                String matriculaProfessor = scanner.nextLine();
+                Professor professor = Professor.encontrarProfessorPorMatricula(matriculaProfessor);
+                if (professor != null) {
+                    MenuProfessor menuProfessor = new MenuProfessor(professor);
+                    menuProfessor.exibirMenu();
+                } else {
+                    System.out.println("Professor não encontrado.");
+                }
+                break;
+            default:
+                System.out.println("Perfil desconhecido.");
+                break;
 
         }
     }
 }
-
